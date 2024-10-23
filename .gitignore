@@ -1,0 +1,7 @@
+.env
+.mp4
+outputs
+assets
+docs/build
+.cache
+__pycache__
