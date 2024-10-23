@@ -15,3 +15,6 @@ Automated workflow.\
 
 # How to replicate?
 Follow the yap written [here](https://batemanrecords.readthedocs.io/en/latest/setup.html)
+
+# Documentation
+https://batemanrecords.readthedocs.io/en/latest/index.html
