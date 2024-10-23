@@ -3,16 +3,28 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-batemanRecords documentation
-============================
+batemanRecords Documentation
+===========================
 
+This documentation provides not-so-comprehensive information about setting up and using batemanRecords.
+
+Getting Started
+--------------
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Getting Started:
 
-   usage
    setup
+   usage
+
+Modules
+-------
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Modules:
+
    modules/app
    modules/spot
    modules/imgur
@@ -21,17 +33,22 @@ batemanRecords documentation
    modules/get_user_pages
    modules/long_lived_access_token_facebook
 
-Indices and tables
-==================
+Bash Scripts
+------------
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. toctree::
+   :maxdepth: 2
+   :caption: Shell Scripts:
 
+   scripts
 
-..   api/app
-   api/spot
-   api/debug_facebook_access_token
-   api/get_instagram_account
-   api/get_user_pages
-   api/long_lived_access_token_facebook
+Reference
+---------
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Reference:
+
+   genindex
+   modindex
+   search
