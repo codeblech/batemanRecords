@@ -22,7 +22,7 @@ Video Generation Scripts
 ------------------------
 
 combineAudioVideo.sh
-~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../scripts/combineAudioVideo.sh
    :language: bash
@@ -37,7 +37,7 @@ This script combines downloaded song and generated video using ffmpeg.
    ./scripts/combineAudioVideo.sh input_audio.mp3 input_video.mp4
 
 generateVideoSpotify.sh
-~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../../scripts/generateVideoSpotify.sh
    :language: bash

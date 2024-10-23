@@ -4,12 +4,12 @@
    contain the root `toctree` directive.
 
 batemanRecords Documentation
-===========================
+============================
 
 This documentation provides not-so-comprehensive information about setting up and using batemanRecords.
 
 Getting Started
---------------
+---------------
 
 .. toctree::
    :maxdepth: 2
