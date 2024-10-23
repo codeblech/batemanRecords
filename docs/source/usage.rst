@@ -11,7 +11,7 @@ Please ensure you've completed all :ref:`setup` steps before proceeding.
 
     bateman <SPOTIFY_URL>
 
-Juicy music at 0:17 ⬇️
+Juicy French Muisc at 0:17 ⬇️
 
 .. video:: ../../images/bateman.mp4
     :alt: batemanRecords
