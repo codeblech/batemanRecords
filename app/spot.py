@@ -1,3 +1,8 @@
+"""
+This module's purpose is to expose a function `get_bateman_video()` that takes in a spotify track URL, generates the upload-able
+bateman video, and returns the file path to that video.
+"""
+
 import os
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
@@ -100,16 +105,19 @@ def download_spotify_preview(track_preview_url: str, track_id: str) -> str | Non
         total_size = int(response.headers.get("content-length", 0))
         block_size = 1024
 
-        with open(save_path, "wb") as f, tqdm(
-            total=total_size,
-            unit="B",
-            unit_scale=True,
-            desc=f"Downloading Audio",
-            colour="white",
-            ncols=80,  # Set width of progress bar
-            leave=True,  # Keep the progress bar after completion
-            bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}]",
-        ) as pbar:
+        with (
+            open(save_path, "wb") as f,
+            tqdm(
+                total=total_size,
+                unit="B",
+                unit_scale=True,
+                desc=f"Downloading Audio",
+                colour="white",
+                ncols=80,  # Set width of progress bar
+                leave=True,  # Keep the progress bar after completion
+                bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}]",
+            ) as pbar,
+        ):
             for data in response.iter_content(block_size):
                 f.write(data)
                 pbar.update(len(data))

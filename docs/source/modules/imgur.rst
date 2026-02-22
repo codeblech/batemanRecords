@@ -1,7 +1,7 @@
-Imgur Module
-============
+Bucket Imgur Module
+===================
 
-.. automodule:: imgur.imgur
+.. automodule:: app.bucket.imgur
    :members:
    :undoc-members:
    :show-inheritance:

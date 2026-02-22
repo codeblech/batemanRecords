@@ -1,4 +1,4 @@
-from app import get_creds, facebook_api_call
+from app.application import get_creds, facebook_api_call
 from rich.console import Console
 
 

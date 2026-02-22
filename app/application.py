@@ -3,14 +3,19 @@ import json
 import os
 from dotenv import load_dotenv
 import time
-from rich.console import Console
-from spot import get_bateman_video
-from imgur.imgur import upload_video_imgur
-from spot import get_spotify_track_data
+
+from app.youtube.main import build_bateman_video
+from app.bucket.main import upload_to_bucket
 from datetime import datetime
+from app.config import console
 
 load_dotenv()
-console = Console()
+
+
+def _print_milestone(title: str, detail: str | None = None):
+    console.rule(f"[bold #FFC0CB]{title}[/bold #FFC0CB]")
+    if detail is not None:
+        console.print(f"[#DDA0DD]{detail}[/#DDA0DD]")
 
 
 def get_creds() -> dict:
@@ -30,7 +35,7 @@ def get_creds() -> dict:
     creds["page_id"] = os.environ.get("PAGE_ID")
     creds["instagram_account_id"] = os.environ.get("INSTAGRAM_ACCOUNT_ID")
     creds["ig_username"] = os.environ.get("IG_USERNAME")
-    console.print("Loaded Environment Variables for Instagram API")
+    console.print("Loaded environment variables for Instagram API")
     return creds
 
 
@@ -239,9 +244,11 @@ def publish_video(params: dict, video_url: str, caption: str):
     )
     publish_video_response = publish_media(video_media_object_id, params)
 
+    published_video_id = publish_video_response["json_data"]["id"]
     console.print(
-        f"Published Video ID: [b #DC143C]{publish_video_response['json_data']['id']}[/b #DC143C] : Published video successfully"
+        f"Published Video ID: [b #DC143C]{published_video_id}[/b #DC143C] : Published video successfully"
     )
+    return published_video_id
 
 
 def get_content_publishing_limit(params: dict) -> dict:
@@ -270,42 +277,58 @@ def get_content_publishing_limit(params: dict) -> dict:
     return facebook_api_call(url, endpoint_params, "GET")
 
 
-def main(spotify_track_url: str):
-    if (video_path := get_bateman_video(spotify_track_url)) is None:
-        print("Bateman Video could not be generated")
-        return
+def main(youtube_track_url: str):
+    _print_milestone("Starting Pipeline", f"Source URL: {youtube_track_url}")
 
-    video_link = upload_video_imgur(
-        video_path,
+    artifacts = build_bateman_video(youtube_track_url)
+    audio_path = artifacts["audio_path"]
+    thumbnail_path = artifacts["thumbnail_path"]
+    video_only_path = artifacts["video_only_path"]
+    final_video_path = artifacts["final_video_path"]
+
+    _print_milestone("Downloaded Audio", f"Path: {audio_path}")
+    _print_milestone("Downloaded Thumbnail", f"Path: {thumbnail_path}")
+    _print_milestone("Generated Video (No Audio)", f"Path: {video_only_path}")
+    _print_milestone("Generated Video (With Audio)", f"Path: {final_video_path}")
+
+    video_link = upload_to_bucket(
+        final_video_path,
         "Patrick Bateman",
         "I have to return some video tapes",
+    )
+    bucket_provider = "imgur" if "imgur.com" in video_link else "tmpfiles"
+    _print_milestone(
+        "Uploaded To Bucket",
+        f"Provider: {bucket_provider} | URL: {video_link}",
     )
 
     params = get_creds()
     # Generating Caption
-    track = get_spotify_track_data(spotify_track_url)
-    artist_names = [track["artists"][i]["name"] for i in range(len(track["artists"]))]
-    track_name = track["name"]
 
-    start_date = datetime(2024, 10, 23) # Inception
+    start_date = datetime(2024, 10, 23)  # Inception
     today = datetime.now()
     days_difference = (today - start_date).days
 
-    ig_caption = f"Day {days_difference} of returning videotapes\n🎶 {', '.join(artist_names)} - {track_name} \n#PatrickBateman"
-    console.print("Caption:")
-    console.print(ig_caption)
-    publish_video(params, video_link, ig_caption)
+    ig_caption = f"Day {days_difference} of returning videotapes\n🎶 \n#PatrickBateman"
+    console.print(
+        f"[bold #FFC0CB]caption        :[/bold #FFC0CB]\n[#DDA0DD]{ig_caption}[/#DDA0DD]"
+    )
+    published_video_id = publish_video(params, video_link, ig_caption)
+    _print_milestone(
+        "Uploaded To Instagram",
+        f"Published video id: {published_video_id}",
+    )
 
     limit = get_content_publishing_limit(params)
 
-    quota_total = limit['json_data']['data'][0]['config']['quota_total']
-    quota_dutation = limit['json_data']['data'][0]['config']['quota_duration']
-    quota_usage = limit['json_data']['data'][0]['quota_usage']
-    console.print("Content Publishing API Limit:")
-    console.print(f"Total Quota: {quota_total}")
-    console.print(f"Quota Duration: {quota_dutation}")
-    console.print(f"Quota Usage: {quota_usage}")
+    quota_total = limit["json_data"]["data"][0]["config"]["quota_total"]
+    quota_dutation = limit["json_data"]["data"][0]["config"]["quota_duration"]
+    quota_usage = limit["json_data"]["data"][0]["quota_usage"]
+    console.print("[bold #FFC0CB]content-publishing-limit[/bold #FFC0CB]")
+    console.print(f"[#DDA0DD]quota-total    : {quota_total}[/#DDA0DD]")
+    console.print(f"[#DDA0DD]quota-duration : {quota_dutation}[/#DDA0DD]")
+    console.print(f"[#DDA0DD]quota-usage    : {quota_usage}[/#DDA0DD]")
 
 
 if __name__ == "__main__":
-    main("https://open.spotify.com/track/5Y6nVaayzitvsD5F7nr3DV?si=99c5eae0c17f4df1")
+    main("https://www.youtube.com/watch?v=MxEjnYdfLXU")
