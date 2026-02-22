@@ -9,9 +9,7 @@ import mimetypes
 import os
 
 import requests
-from dotenv import load_dotenv
-
-load_dotenv()
+from app.config import config
 
 
 def upload_video_giphy(
@@ -23,7 +21,7 @@ def upload_video_giphy(
     region=None,
     source_image_url=None,
 ):
-    api_key = os.getenv("GIPHY_API_KEY")
+    api_key = config.giphy_api_key()
     if not api_key:
         raise ValueError("Missing GIPHY_API_KEY in environment.")
 

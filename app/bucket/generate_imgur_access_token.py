@@ -1,13 +1,11 @@
 import requests
-from dotenv import load_dotenv
-import os
-load_dotenv()
+from app.config import config
 
 url = "https://api.imgur.com/oauth2/token"
 
-refreshToken = os.getenv('IMGUR_REFRESH_TOKEN')
-clientId = os.getenv('IMGUR_CLIENT_ID')
-clientSecret = os.getenv('IMGUR_CLIENT_SECRET')
+refreshToken = config.imgur_refresh_token()
+clientId = config.imgur_client_id()
+clientSecret = config.imgur_client_secret()
 
 payload={'refresh_token': f'{refreshToken}',
 'client_id': f'{clientId}',

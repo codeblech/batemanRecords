@@ -3,15 +3,14 @@ The purpose of this module is to take in a video_path, upload it to Imgur, and r
 """
 
 import requests
-from dotenv import load_dotenv
 import os
 import json
 
-load_dotenv()
+from app.config import config
 
 
 def upload_video_imgur(video_path, title, description):
-    client_id = os.getenv("IMGUR_CLIENT_ID")
+    client_id = config.imgur_client_id()
     url = "https://api.imgur.com/3/image"
 
     payload = {"type": "file", "title": title, "description": description}

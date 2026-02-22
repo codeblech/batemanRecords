@@ -1,20 +1,16 @@
 """
 This module's purpose is to expose a function `get_bateman_video()` that takes in a spotify track URL, generates the upload-able
-bateman video, and returns the file path to that video.
+bateman video, and returns the file path to that video. Spotify doesn't expose preview URLs anymore, so this module is currently
+useless.
 """
 
 import os
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-from dotenv import load_dotenv
 import requests
 from tqdm import tqdm
 import subprocess
-from rich.console import Console
-
-load_dotenv()
-
-console = Console()
+from app.config import console
 
 
 def download_thumbnail_spotify(thumbnail_url: str, track_id: str) -> str | None:

@@ -1,15 +1,11 @@
 import requests
 import json
-import os
-from dotenv import load_dotenv
 import time
 
 from app.youtube.main import build_bateman_video
 from app.bucket.main import upload_to_bucket
 from datetime import datetime
-from app.config import console
-
-load_dotenv()
+from app.config import console, config
 
 
 def _print_milestone(title: str, detail: str | None = None):
@@ -25,16 +21,7 @@ def get_creds() -> dict:
         dict: dictionary containing access token, client id, client secret, graph domain, graph version, endpoint base, page id, instagram account id, and instagram username
     """
 
-    creds = dict()
-    creds["access_token"] = os.environ.get("FB_ACCESS_TOKEN")
-    creds["client_id"] = os.environ.get("FB_CLIENT_ID")
-    creds["client_secret"] = os.environ.get("FB_CLIENT_SECRET")
-    creds["graph_domain"] = os.environ.get("GRAPH_DOMAIN")
-    creds["graph_version"] = os.environ.get("GRAPH_VERSION")
-    creds["endpoint_base"] = creds["graph_domain"] + creds["graph_version"] + "/"
-    creds["page_id"] = os.environ.get("PAGE_ID")
-    creds["instagram_account_id"] = os.environ.get("INSTAGRAM_ACCOUNT_ID")
-    creds["ig_username"] = os.environ.get("IG_USERNAME")
+    creds = config.instagram_creds()
     console.print("Loaded environment variables for Instagram API")
     return creds
 
