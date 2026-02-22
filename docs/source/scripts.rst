@@ -1,22 +1,22 @@
 Scripts Documentation
 =====================
 
-This section documents the bash scripts used in batemanRecords.
+This section documents shell scripts currently used in batemanRecords.
 
 bateman.sh
 ----------
 
-.. literalinclude:: ../../bateman.sh
+.. literalinclude:: ../../app/bateman.sh
    :language: bash
    :linenos:
-   :caption: bateman.sh
+   :caption: app/bateman.sh
 
-Runs cli.py inside poetry shell.
+Runs the CLI entrypoint with Poetry.
 
 .. code-block:: bash
 
-   # Example usage
-   ./bateman.sh [SPOTIFY_URL]
+   ./app/bateman.sh "<YOUTUBE_URL>"
+
 
 Video Generation Scripts
 ------------------------
@@ -24,29 +24,28 @@ Video Generation Scripts
 combineAudioVideo.sh
 ~~~~~~~~~~~~~~~~~~~~
 
-.. literalinclude:: ../../scripts/combineAudioVideo.sh
+.. literalinclude:: ../../app/scripts/combineAudioVideo.sh
    :language: bash
    :linenos:
-   :caption: scripts/combineAudioVideo.sh
+   :caption: app/scripts/combineAudioVideo.sh
 
-This script combines downloaded song and generated video using ffmpeg.
+Combines generated video with downloaded audio and applies the chosen audio offset.
 
 .. code-block:: bash
 
-   # Example usage
-   ./scripts/combineAudioVideo.sh input_audio.mp3 input_video.mp4
+   ./app/scripts/combineAudioVideo.sh input_audio.mp3 input_video.mp4 0
 
-generateVideoSpotify.sh
+
+generateVideoYoutube.sh
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-.. literalinclude:: ../../scripts/generateVideoSpotify.sh
+.. literalinclude:: ../../app/scripts/generateVideoYoutube.sh
    :language: bash
    :linenos:
-   :caption: scripts/generateVideoSpotify.sh
+   :caption: app/scripts/generateVideoYoutube.sh
 
-This script generates Bateman video for Spotify cover art. This is specific to Spotify because the resolution is specific to Spotify, and different from YouTube & YouTube Music.
+Generates the Bateman background-composited video from a thumbnail image.
 
 .. code-block:: bash
 
-   # Example usage
-   ./scripts/generateVideoSpotify.sh [bgImagePath]
+   ./app/scripts/generateVideoYoutube.sh [bgImagePath]

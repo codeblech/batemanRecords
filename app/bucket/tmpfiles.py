@@ -1,5 +1,8 @@
 """
-Upload a local file to tmpfiles.org and return the uploaded file URL.
+tmpfiles.org bucket provider (fallback).
+
+Used when the primary Imgur upload path fails. Returns a direct download URL
+that can be consumed by the Instagram publish flow.
 """
 
 import json
@@ -10,6 +13,7 @@ from app.config import console
 
 
 def upload_video_tmpfiles(video_path):
+    """Upload a local file to tmpfiles.org and return a direct download URL."""
     url = "https://tmpfiles.org/api/v1/upload"
 
     with open(video_path, "rb") as file_handle:

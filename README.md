@@ -6,7 +6,7 @@ https://github.com/user-attachments/assets/fac09a67-69a1-48d0-ad6c-7dfc4f813d7d
 
 # What?
 Automated workflow.\
-**Input**: URL of a song on Spotify\
+**Input**: URL of a song/video on YouTube\
 **Ouput**: a Patrick Bateman Walking to Music video is generated & uploaded to my [instagram](https://www.instagram.com/patrick.bateman.records/)
 
 # How?

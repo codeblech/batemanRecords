@@ -13,19 +13,6 @@ files = [
 ]
 
 [[package]]
-name = "async-timeout"
-version = "4.0.3"
-description = "Timeout context manager for asyncio programs"
-optional = false
-python-versions = ">=3.7"
-groups = ["main"]
-markers = "python_full_version < \"3.11.3\""
-files = [
-    {file = "async-timeout-4.0.3.tar.gz", hash = "sha256:4640d96be84d82d02ed59ea2b7105a0f7b33abe8703703cd0ab0bf87c427522f"},
-    {file = "async_timeout-4.0.3-py3-none-any.whl", hash = "sha256:7405140ff1230c310e51dc27b3145b9092d659ce68ff733fb0cefe3ee42be028"},
-]
-
-[[package]]
 name = "babel"
 version = "2.16.0"
 description = "Internationalization utilities"
@@ -1005,25 +992,6 @@ files = [
 cli = ["click (>=5.0)"]
 
 [[package]]
-name = "redis"
-version = "5.1.1"
-description = "Python client for Redis database and key-value store"
-optional = false
-python-versions = ">=3.8"
-groups = ["main"]
-files = [
-    {file = "redis-5.1.1-py3-none-any.whl", hash = "sha256:f8ea06b7482a668c6475ae202ed8d9bcaa409f6e87fb77ed1043d912afd62e24"},
-    {file = "redis-5.1.1.tar.gz", hash = "sha256:f6c997521fedbae53387307c5d0bf784d9acc28d9f1d058abeac566ec4dbed72"},
-]
-
-[package.dependencies]
-async-timeout = {version = ">=4.0.3", markers = "python_full_version < \"3.11.3\""}
-
-[package.extras]
-hiredis = ["hiredis (>=3.0.0)"]
-ocsp = ["cryptography (>=36.0.1)", "pyopenssl (==23.2.1)", "requests (>=2.31.0)"]
-
-[[package]]
 name = "requests"
 version = "2.32.3"
 description = "Python HTTP for Humans."
@@ -1276,27 +1244,6 @@ doc = ["pydata-sphinx-theme (==0.13.0rc3)", "sphinx-design"]
 test = ["beautifulsoup4", "pytest", "pytest-cov", "pytest-regressions"]
 
 [[package]]
-name = "spotipy"
-version = "2.24.0"
-description = "A light weight Python library for the Spotify Web API"
-optional = false
-python-versions = ">3.8"
-groups = ["main"]
-files = [
-    {file = "spotipy-2.24.0-py3-none-any.whl", hash = "sha256:c5aa7338c624a05a8a80dcf9c6761ded3d6bc2bc5df5f22d9398a895b11bd2ae"},
-    {file = "spotipy-2.24.0.tar.gz", hash = "sha256:396af81e642086551af157270cdfe742c1739405871ba9dac1fa651b8649ef0d"},
-]
-
-[package.dependencies]
-redis = ">=3.5.3"
-requests = ">=2.25.0"
-urllib3 = ">=1.26.0"
-
-[package.extras]
-memcache = ["pymemcache (>=3.5.2)"]
-test = ["mock (==2.0.0)"]
-
-[[package]]
 name = "tomli"
 version = "2.0.2"
 description = "A lil' TOML parser"
@@ -1499,4 +1446,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "fd14048ec86277b61590a6a557b57dd8317d7be208d3a08d1161fd7cec8cfbf3"
+content-hash = "151de1913e1cd0cdd413730e9ad7c2a7e0a25ea2d29940539737a4c820f06d37"

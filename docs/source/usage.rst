@@ -5,11 +5,17 @@ Usage
 
 Please ensure you've completed all :ref:`setup` steps before proceeding.
 
-- In Terminal, run\
+- In terminal, run:
 
 .. code-block:: bash
 
-    bateman <SPOTIFY_URL>
+    bateman <YOUTUBE_URL>
+
+Or run directly without alias:
+
+.. code-block:: bash
+
+    poetry run python -m app.cli "<YOUTUBE_URL>"
 
 Juicy French Muisc at 0:17 ⬇️
 

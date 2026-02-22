@@ -1,5 +1,8 @@
 """
-The purpose of this module is to take in a video_path, upload it to Imgur, and return its URL.
+Imgur bucket provider (primary).
+
+Uploads a local video file to Imgur and returns the public media URL.
+This is the first provider attempted by `app.bucket.main.upload_to_bucket`.
 """
 
 import requests
@@ -10,6 +13,7 @@ from app.config import config
 
 
 def upload_video_imgur(video_path, title, description):
+    """Upload a video to Imgur and return the resulting public link."""
     client_id = config.imgur_client_id()
     url = "https://api.imgur.com/3/image"
 

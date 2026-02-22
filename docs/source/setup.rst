@@ -7,10 +7,10 @@ Setup
 =============================
 
 1. Make a Facebook account
-2. Make a Facebook Page using that account. `steps <https://www.facebook.com/business/help/1199464373557428?id=418112142508425>`_
+2. Make a Facebook Page using that account. `Facebook Page guide <https://www.facebook.com/business/help/1199464373557428?id=418112142508425>`_
 3. Make an Instagram account using the same email
 4. Change the Instagram account type to professional (not private, nor public)
-5. Connect the Facebook page to the Instagram account. `steps <https://www.facebook.com/business/help/connect-instagram-to-page>`_
+5. Connect the Facebook page to the Instagram account. `Instagram connection guide <https://www.facebook.com/business/help/connect-instagram-to-page>`_
 6. On the Facebook (Meta) developer site, register yourself, and create a new app. The interface keeps on changing, so it's kinda useless to document exact steps and screenshots. Remember to create a Business type app as opposed to Consumer type app.
 7. Open *Add products to your app* page if it doesn't open automatically. Add the product named "Instagram" by clicking on "Set-up".
 8. On the page *API setup with Instagram business login*, generate access tokens by adding your instagram account
@@ -31,9 +31,9 @@ Setup
 
 13. In a .env file, set FB_ACCESS_TOKEN as the short lived token, generated in step 12.
 
-14. Find your PAGE_ID by running `get_user_pages.py` or these `steps <https://www.facebook.com/help/1503421039731588>`_. Set this in the .env file
+14. Find your PAGE_ID by running `app/facebook/get_user_pages.py` or this `Facebook help page <https://www.facebook.com/help/1503421039731588>`_. Set this in the .env file
 
-15. Find your INSTAGRAM_ACCOUNT_ID by running `get_instagram_account.py` or go to https://accountscenter.instagram.com/profiles/ , click on your username, the url in the browser will change to `https://accountscenter.instagram.com/profiles/<INSTAGRAM_ACCOUNT_ID>`. Set this in the .env file
+15. Find your INSTAGRAM_ACCOUNT_ID by running `app/facebook/get_instagram_account.py` or go to https://accountscenter.instagram.com/profiles/ , click on your username, the url in the browser will change to `https://accountscenter.instagram.com/profiles/<INSTAGRAM_ACCOUNT_ID>`. Set this in the .env file
 
 16. Setup these environent variables in the *.env* file
     - FB_ACCESS_TOKEN
@@ -48,7 +48,7 @@ Setup
 When facebook access token gets expired
 ----------------------------------------
 1. Follow the steps 10,11,12,13 to get a new short lived token.
-2. Run `long_lived_access_token.py` to get a new long lived access token
+2. Run `app/facebook/long_lived_access_token_facebook.py` to get a new long lived access token
 3. In the .env file, set FB_ACCESS_TOKEN as this new token.
 
 
@@ -71,22 +71,22 @@ When facebook access token gets expired
 - Now if the token gets expired, run `generate_access_token.py` to get the new access token and refresh token
 
 
-3. Spotify setup
-================
-1. Create a new app on Spotify Developer Dashboard (only *WebAPI App* needed).
-2. Set the redirect URI as anything, it won't matter
-3. Save the following in the .env file
-    - SPOTIPY_CLIENT_ID
-    - SPOTIPY_CLIENT_SECRET
-    - SPOTIPY_REDIRECT_URI
+3. YouTube ingestion prerequisites
+==================================
 
+The audio files are downloaded using `yt-dlp`.
+
+- Install `yt-dlp` (already included as a Python dependency in this project).
+- Install `deno` and ensure it is available in `PATH` for JavaScript challenge support when required.
+- Install Challenge Solver Scripts from `yt-dlp EJS guide <https://github.com/yt-dlp/yt-dlp/wiki/EJS>`_. This is required by `yt-dlp` to solve javascript challenges on youtube.
 
 4. FFMPEG
-==========
-- Download, install & add FFMPEG to $PATH variable
+=========
+
+Install `ffmpeg` and make sure it is available in `PATH`.
 
 
-5. Repo & Bash setup
+5. Repo & Shell setup
 =====================
 1. **Clone the repo**:
 
@@ -109,11 +109,11 @@ From root of the repo, run:
      `poetry install`
 
 5. **Create an alias for this command**:
-Write  in `~/.bashrc` file:
+Write in `~/.bashrc` or `~/.zshrc` or any other shell config file:
 
 .. code-block:: bash
 
-    alias bateman="PATH/TO/BATEMAN.SH"
+    alias bateman="PATH/TO/batemanRecords/app/bateman.sh"
 
 
 6. **Reload the bashrc file**:
@@ -121,6 +121,16 @@ Write  in `~/.bashrc` file:
 .. code-block:: bash
 
     source ~/.bashrc
+
+
+7. Centralized configuration
+============================
+
+Environment loading and access are centralized in `app/config.py`:
+
+- `Config` calls `load_dotenv()` once.
+- Modules should import `config` from `app.config`.
+- Avoid per-module `load_dotenv()` calls.
 
 
 Note
@@ -135,4 +145,4 @@ Note
     - `page_id`
     - `instagram_account_id`
     - `instagram_username`
-- Run `debug_access_token.py` to get info(type, expire_time, scopes, etc) about the access token set in the .env file as ACESS_TOKEN
+- Run `app/facebook/debug_facebook_access_token.py` to get info(type, expire_time, scopes, etc) about the access token set in the .env file as ACESS_TOKEN

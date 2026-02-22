@@ -26,12 +26,8 @@ Modules
    :caption: Modules:
 
    modules/app
-   modules/spot
-   modules/imgur
-   modules/debug_facebook_access_token
-   modules/get_instagram_account
-   modules/get_user_pages
-   modules/long_lived_access_token_facebook
+   modules/bucket
+   modules/social
 
 Bash Scripts
 ------------

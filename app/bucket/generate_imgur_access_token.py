@@ -1,21 +1,29 @@
+"""
+Utility for refreshing Imgur OAuth tokens.
+
+This module is intentionally side-effect free on import so it can be documented
+by Sphinx autodoc without performing network calls.
+"""
+
 import requests
+
 from app.config import config
 
-url = "https://api.imgur.com/oauth2/token"
 
-refreshToken = config.imgur_refresh_token()
-clientId = config.imgur_client_id()
-clientSecret = config.imgur_client_secret()
+def generate_imgur_access_token() -> str:
+    """Request a refreshed Imgur token payload and return response text."""
+    url = "https://api.imgur.com/oauth2/token"
 
-payload={'refresh_token': f'{refreshToken}',
-'client_id': f'{clientId}',
-'client_secret': f'{clientSecret}',
-'grant_type': 'refresh_token'}
-files=[
+    payload = {
+        "refresh_token": config.imgur_refresh_token(),
+        "client_id": config.imgur_client_id(),
+        "client_secret": config.imgur_client_secret(),
+        "grant_type": "refresh_token",
+    }
 
-]
-headers = {}
+    response = requests.post(url, data=payload)
+    return response.text
 
-response = requests.request("POST", url, headers=headers, data=payload, files=files)
 
-print(response.text)
+if __name__ == "__main__":
+    print(generate_imgur_access_token())
