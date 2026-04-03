@@ -7,6 +7,9 @@ from app.bucket.main import upload_to_bucket
 from datetime import datetime
 from app.config import console, config
 
+import typer
+
+app = typer.Typer()
 
 def _print_milestone(title: str, detail: str | None = None):
     console.rule(f"[bold #FFC0CB]{title}[/bold #FFC0CB]")
@@ -264,10 +267,11 @@ def get_content_publishing_limit(params: dict) -> dict:
     return facebook_api_call(url, endpoint_params, "GET")
 
 
-def main(youtube_track_url: str):
+@app.command()
+def main(youtube_track_url: str, offset_seconds: int | None = typer.Option(None, "--offset", "-o", help="Start offset in seconds")):
     _print_milestone("Starting Pipeline", f"Source URL: {youtube_track_url}")
-
-    artifacts = build_bateman_video(youtube_track_url)
+    _print_milestone("Provided Offset Seconds", f"{offset_seconds}")
+    artifacts = build_bateman_video(youtube_track_url, offset_seconds)
     audio_path = artifacts["audio_path"]
     thumbnail_path = artifacts["thumbnail_path"]
     video_only_path = artifacts["video_only_path"]
@@ -318,4 +322,4 @@ def main(youtube_track_url: str):
 
 
 if __name__ == "__main__":
-    main("https://www.youtube.com/watch?v=MxEjnYdfLXU")
+    app()
